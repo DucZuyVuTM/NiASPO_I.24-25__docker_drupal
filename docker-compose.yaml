@@ -1,0 +1,30 @@
+version: '3'
+
+services:
+  drupal:
+    build: .
+    ports:
+      - "8080:80"
+    depends_on:
+      - db
+    volumes:
+      - drupal_data:/var/www/html
+    environment:
+      - DRUPAL_DB_HOST=db
+      - DRUPAL_DB_NAME=drupal
+      - DRUPAL_DB_USER=drupal
+      - DRUPAL_DB_PASSWORD=drupal
+
+  db:
+    image: mysql:5.7
+    environment:
+      MYSQL_DATABASE: drupal
+      MYSQL_USER: drupal
+      MYSQL_PASSWORD: drupal
+      MYSQL_ROOT_PASSWORD: rootpassword
+    volumes:
+      - db_data:/var/lib/mysql
+
+volumes:
+  drupal_data:
+  db_data:
